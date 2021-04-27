@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-header">
+    <strong>Stations :</strong>
+    <button
+      id="button"
+      *ngIf="(stations$ | async)?.length == 1"
+      class="btn btn-secondary"
+      type="submit"
+      (click)="click()"
+    >
+      <i class="fas fa-redo-alt"></i> Reinitialiser
+    </button>
+  </div>
+  <div class="table-responsive" style="padding-left: 25px; padding-right: 25px">
+    <div *ngIf="error">
+      {{
+        showToastr(
+          "Une erreur est survenue. Merci de réessayer ultérieurement."
+        )
+      }}
+    </div>
+    <div *ngIf="(stations$ | async)?.length == 0">
+      {{
+        showToastr(
+          "Désolé, nous n’avons trouvé aucun résultat correspondant à votre recherche. Veuillez réessayer"
+        )
+      }}
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Commune</th>
+          <th scope="col">Nom de la station</th>
+          <th scope="col">En service</th>
+          <th scope="col">Vélos disponibles</th>
+          <th scope="col">Places disponibles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stations of stations$ | async">
+          <td>{{ stations.commune }}</td>
+          <td>{{ stations.nom }}</td>
+          <td
+            [ngClass]="{
+              'text-success': stations.etat === 'EN SERVICE',
+              'text-danger': stations.etat != 'EN SERVICE'
+            }"
+          >
+            {{ stations | etat }}
+          </td>
+          <td
+            [ngClass]="{
+              'text-danger': stations.nbvelosdispo === 0
+            }"
+          >
+            {{ stations.nbvelosdispo }}
+          </td>
+          <td
+            [ngClass]="{
+              'text-danger': stations.nbplacesdispo === 0
+            }"
+          >
+            {{ stations.nbplacesdispo }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

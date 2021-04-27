@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-header"><strong>Recherche :</strong></div>
+  <form [formGroup]="form" class="form-horizontal row" (ngSubmit)="onSubmit()">
+    <div class="panel panel-default">
+      <div id="panel-body" class="panel-body">
+        <div class="input-group mb-3">
+          <input
+            class="form-control"
+            name="station"
+            formControlName="station"
+            id="station"
+            placeholder="Nom de la station"
+            [(ngModel)]="value"
+          />
+          <div class="input-group-prepend">
+            <button class="btn btn-primary" [disabled]="form.invalid">
+              <i class="fa fa-search"></i> Rechercher
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<br />
